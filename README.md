@@ -136,3 +136,7 @@ npm run cypress:run
 - `cypress/e2e/kanban-flow.cy.ts` - Teste principal com todos os cenários
 - `cypress/support/commands.ts` - Comandos customizados (login, dragTo)
 - `cypress.config.ts` - Configuração do Cypress  
+
+### Links relacionados
+- Github do back-end: https://github.com/manuelamonteiro/mini-kanban-api
+- Vídeo: https://www.youtube.com/watch?v=vEgLDAbjgNQ
