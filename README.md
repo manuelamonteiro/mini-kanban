@@ -94,3 +94,45 @@ npm run start
 - `npm run build` – build de produção.  
 - `npm run start` – inicia o build já gerado.  
 - `npm run lint` – ESLint com config do Next.  
+- `npm run cypress:open` – abre o Cypress Test Runner em modo interativo.  
+- `npm run cypress:run` – executa os testes Cypress em modo headless.
+
+## Testes E2E com Cypress
+
+Este projeto inclui testes end-to-end automatizados usando Cypress. Os testes cobrem o fluxo completo da aplicação:
+
+### Cenários de teste
+1. **Login e Autenticação** - Login com credenciais válidas
+2. **Criação de Board** - Criar um novo board e verificar redirecionamento
+3. **Gerenciamento de Boards** - Criar múltiplos boards e deletar um deles
+4. **Navegação** - Acessar um board específico
+5. **Criação de Card** - Criar um card em uma coluna
+6. **Drag and Drop** - Arrastar card entre colunas
+7. **Edição de Card** - Editar título e descrição de um card
+8. **Exclusão de Card** - Deletar um card com confirmação
+
+### Como executar os testes
+
+**Pré-requisitos:**
+- API backend rodando (geralmente em `http://localhost:5000`)
+- Aplicação frontend rodando (geralmente em `http://localhost:3000`)
+- Usuário de teste cadastrado: `ana@example.com` / `segredo123`
+
+**Modo interativo (recomendado para desenvolvimento):**
+```bash
+# Terminal 1: Rodar a aplicação
+npm run dev
+
+# Terminal 2: Abrir Cypress
+npm run cypress:open
+```
+
+**Modo headless (para CI/CD):**
+```bash
+npm run cypress:run
+```
+
+### Estrutura dos testes
+- `cypress/e2e/kanban-flow.cy.ts` - Teste principal com todos os cenários
+- `cypress/support/commands.ts` - Comandos customizados (login, dragTo)
+- `cypress.config.ts` - Configuração do Cypress  

@@ -1,0 +1,20 @@
+{
+  "testUser": {
+    "email": "ana@example.com",
+    "password": "segredo123"
+  },
+  "boards": {
+    "first": {
+      "name": "Test Board 1"
+    },
+    "second": {
+      "name": "Test Board 2"
+    }
+  },
+  "cards": {
+    "default": {
+      "title": "Test Card",
+      "description": "This is a test card description"
+    }
+  }
+}
