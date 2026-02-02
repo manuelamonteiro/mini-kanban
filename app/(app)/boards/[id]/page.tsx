@@ -40,7 +40,7 @@ function applyLocalMove(board: Board, cardId: string, toColumnId: string, destIn
   if (!moved) return board
 
   const finalColumns: Column[] = nextColumns.map((col) => {
-    if (col.id !== toColumnId) return col
+    if (String(col.id) !== String(toColumnId)) return col
 
     const safeIndex = Math.max(0, Math.min(destIndex, col.cards.length))
     const nextCards = [...col.cards]
@@ -170,7 +170,7 @@ export default function BoardPage() {
     if (!board || !draggingCardId) return
 
     const previous = board
-    const destColumn = board.columns.find((c) => c.id === columnId)
+    const destColumn = board.columns.find((c) => String(c.id) === String(columnId))
     if (!destColumn) return
 
     const sameColumn = String(dragFromColumnId) === String(columnId)
@@ -205,7 +205,7 @@ export default function BoardPage() {
 
   function openEditCard(card: Card) {
     setEditMode("edit")
-    setEditColumnId(card.columnId)
+    setEditColumnId(String(card.columnId))
     setSelectedCard(card)
     setEditOpen(true)
   }
@@ -228,7 +228,7 @@ export default function BoardPage() {
         return {
           ...prev,
           columns: prev.columns.map((col) => {
-            if (col.id !== columnId) return col
+            if (String(col.id) !== String(columnId)) return col
             return { ...col, cards: normalizeCards([...col.cards, created]) }
           }),
         }
@@ -260,15 +260,20 @@ export default function BoardPage() {
     if (!board || !deleteCardTarget) return
 
     const previous = board
+    console.log("previous", previous)
     const target = deleteCardTarget
+    console.log("target", target)
 
     setBoard((prev) => {
       if (!prev) return prev
+
       return {
         ...prev,
         columns: prev.columns.map((col) => {
-          if (col.id !== target.columnId) return col
           const nextCards = col.cards.filter((c) => c.id !== target.id)
+
+          if (nextCards.length === col.cards.length) return col
+
           return { ...col, cards: normalizeCards(nextCards) }
         }),
       }
@@ -336,10 +341,10 @@ export default function BoardPage() {
               md:overflow-x-auto md:overflow-y-hidden pb-12
             "
           >
-            <div className="h-full px-6 py-2">
+            <div className="h-full w-full px-6 py-2 md:w-max">
               <div
                 className="
-                  flex gap-4 
+                  flex gap-4
                   flex-col pb-6
                   md:flex-row md:w-max md:items-start
                 "
@@ -367,7 +372,13 @@ export default function BoardPage() {
           </section>
         </main>
 
-        <CardEditDialog open={editOpen} onOpenChange={setEditOpen} mode={editMode} card={selectedCard} onSave={handleSaveCard} />
+        <CardEditDialog
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          mode={editMode}
+          card={selectedCard}
+          onSave={handleSaveCard}
+        />
 
         <CardDeleteDialog
           open={deleteOpen}

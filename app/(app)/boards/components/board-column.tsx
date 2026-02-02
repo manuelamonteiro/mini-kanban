@@ -42,19 +42,19 @@ export function BoardColumn({
   const cards = [...column.cards].sort((a, b) => a.position - b.position)
 
   function isTarget(beforeCardId: string | null) {
-    return activeColumnId === column.id && dropBeforeCardId === beforeCardId
+    return String(activeColumnId) === String(column.id) && dropBeforeCardId === beforeCardId
   }
 
   function handleDropZoneDragOver(event: React.DragEvent<HTMLDivElement>, beforeCardId: string | null) {
     event.preventDefault()
     event.stopPropagation()
-    onCardDragOver(column.id, beforeCardId)
+    onCardDragOver(String(column.id), beforeCardId)
   }
 
   function handleDropZoneDrop(event: React.DragEvent<HTMLDivElement>, beforeCardId: string | null) {
     event.preventDefault()
     event.stopPropagation()
-    onCardDrop(column.id, beforeCardId)
+    onCardDrop(String(column.id), beforeCardId)
   }
 
   const firstCardId = cards[0]?.id ?? null
@@ -77,7 +77,7 @@ export function BoardColumn({
           type="button"
           size="sm"
           variant="outline"
-          onClick={() => onCreateCard(column.id)}
+          onClick={() => onCreateCard(String(column.id))}
           className="gap-1"
           data-testid={`column-add-${column.id}`}
           id={`column-add-${column.id}`}
@@ -114,10 +114,10 @@ export function BoardColumn({
                 card={card}
                 isDragging={draggingCardId === card.id}
                 isDropTarget={isTarget(card.id)}
-                onDragStart={() => onCardDragStart(card.id, column.id)}
+                onDragStart={() => onCardDragStart(card.id, String(column.id))}
                 onDragEnd={onCardDragEnd}
-                onDragOver={() => onCardDragOver(column.id, card.id)}
-                onDrop={() => onCardDrop(column.id, card.id)}
+                onDragOver={() => onCardDragOver(String(column.id), card.id)}
+                onDrop={() => onCardDrop(String(column.id), card.id)}
                 onEdit={onEditCard}
                 onDelete={onDeleteCard}
               />
